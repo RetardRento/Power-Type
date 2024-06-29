@@ -103,7 +103,7 @@ var words = [
 var currentWord = "";
 var currentInput = "";
 var future = [];
-var timerconfig = 30;
+var timerconfig = 10;
 var futureconfig = 20;
 var timer;
 var timerId = null;
@@ -124,6 +124,8 @@ var bgcolorconfig = getComputedStyle(document.documentElement).getPropertyValue(
   "--bg-color"
 );
 
+// backend-integration -------------------------------------------------------------------------------------------------------
+
 //timer ----------------------------------------------------------------------------------------------------------------------
 
 function countdown() {
@@ -139,8 +141,6 @@ function countdown() {
 
 function showResult() {
   focus(false);
-  // $('.result .key .res').html(correctKeyCount+'/<span style="color:#F44336">'+incorrectKeyCount+'</span>'+' ('+(correctKeyCount+incorrectKeyCount)+')');
-  // $('.result .wrd .res').html(correctCount+'/<span style="color:#F44336">'+incorrectCount+'</span>');
   $(".title").text("mmtt/result");
   $(".result .key .res").html(correctKeyCount + "/" + incorrectKeyCount);
   $(".result .wrd .res").html(correctCount + "/" + incorrectCount);
@@ -212,9 +212,6 @@ function scoreKey(keystroke) {
   }
   console.log("cor " + correctKeyCount);
   console.log("err " + incorrectKeyCount);
-  // console.log(currentWord);
-  // console.log(keystroke);
-  // console.log(currentInput);
 }
 
 function compareInput() {
@@ -280,14 +277,20 @@ function initLastFuture() {
   future[futureconfig - 1] = randomWord;
 }
 
+function setTimerConfig() {
+  var timerSelect = document.getElementById("timer-duration");
+  timerconfig = parseInt(timerSelect.value, 10);
+}
+
 function init() {
+  setTimerConfig();
   $(".test")
     .css("opacity", "0")
     .removeClass("hidden")
     .stop(true, true)
     .animate({ opacity: 1 }, 250);
 
-  $(".title").text("nbtt/type");
+  $(".title").text("Power Type!");
   future = [];
   correctCount = 0;
   incorrectCount = 0;
@@ -303,6 +306,14 @@ function init() {
   focus(false);
 }
 
+// event listeners in changes of timer duration
+
+document
+  .getElementById("timer-duration")
+  .addEventListener("change", function () {
+    setTimerConfig();
+    init();
+  });
 // event handlers ------------------------------------------------------------------------
 
 //letters
