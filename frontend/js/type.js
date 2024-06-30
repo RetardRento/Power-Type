@@ -409,3 +409,10 @@ $(".test")
   .removeClass("hidden")
   .stop(true, true)
   .animate({ opacity: 1 }, 250);
+
+//Socket connection
+const socket = new WebSocket('ws://localhost:3000');
+
+socket.addEventListener('open', () => {
+  console.log('Connected to the server.');
+});
